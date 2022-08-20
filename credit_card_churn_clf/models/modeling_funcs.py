@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import roc_auc_score, recall_score, precision_score
+from sklearn.metrics import roc_auc_score, recall_score, precision_score, accuracy_score
 
 from credit_card_churn_clf.data.data_funcs import read_credit_card_churn_split
 from credit_card_churn_clf.models.feature_engineering import col_transf
@@ -136,11 +136,13 @@ def predict_on_test_set(
     roc_auc_test = roc_auc_score(y_test, y_scores)
     recall_test = recall_score(y_test, y_scores)
     precision_test = precision_score(y_test, y_scores)
+    accuracy_test = accuracy_score(y_test, y_scores)
     logger.info(
         f"""Métricas do modelo {model_name} no conjunto de teste usando {threshold} como threshold:
             ROC AUC: {roc_auc_test}
             Recall: {recall_test}
-            Precision: {precision_test}"""
+            Precision: {precision_test}
+            Accuracy: {accuracy_test}"""
     )
     X_test["y_true"] = y_test
     X_test["y_preds"] = y_scores
